@@ -67,7 +67,7 @@ def save_img(src, title, save_path):
     
 
     if SAVE and not os.path.exists(save_path + ".png"):        
-        plt.savefig(save_path + ".png", dpi=200, bbox_inches='tight')
+        plt.savefig(save_path + ".png", dpi=150, bbox_inches='tight')
 
 def generate_GLPF(shape=(1200,1200), d_0=100):
     """
@@ -180,7 +180,7 @@ def find_highest_k_freq(img, k):
     m, n = img.shape
 
     left_half = np.abs(img[:m, :n//2])
-    print(left_half.shape)
+    
     indices =  np.argpartition(left_half.flatten(), -2)[-k:]
     indices = np.vstack(np.unravel_index(indices, left_half.shape)).T
     return indices
@@ -245,6 +245,8 @@ if __name__ == "__main__":
     save_img(kid_lpf[-1], "Gaussian lowpass filter result", "img_kid/kid_glpf")
     save_img(fruit_hpf[-1], "Gaussian highpass filter result", "img_fruit/fruit_ghpf")
     save_img(kid_hpf[-1], "Gaussian highpass filter result", "img_kid/kid_ghpf")
+    save_img(glpf, "Magnitude of Gaussian lowpass filter", "glpf")
+    save_img(ghpf, "Magnitude of Gaussian highpass filter", "ghpf")
 
     # whether to show the saved images
     # plt.show()
