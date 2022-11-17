@@ -6,6 +6,7 @@ import numpy.fft as fft
 import matplotlib.pyplot as plt
 from numpy.fft import ifft2, ifft, fft2, fftshift, ifftshift
 
+
 def check_folder(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -88,6 +89,7 @@ def save_img(src, title, save_path):
     if (os.path.exists(save_path + title + ".png")):
         return
     if SAVE:
+        check_folder((save_path))
         plt.savefig(save_path + title + ".png", dpi=200, bbox_inches='tight')
 
 def save_hist(src, title, save_path):
@@ -100,6 +102,7 @@ def save_hist(src, title, save_path):
     if (os.path.exists(save_path + title + "-histogram.png")):
         return
     if SAVE:
+        check_folder((save_path))
         plt.savefig(save_path + title + "-histogram.png", dpi=200, bbox_inches='tight')
 
 
@@ -160,7 +163,7 @@ def main():
     # f(x, y) convolution with h(x, y) = s(x, y)
     # f(x, y) = s(x, y) / h(x, y)
 
-    image = cv2.imread('Kid_degraded.tiff', 0)
+    image = cv2.imread('Kid2_degraded.tiff', 0)
     
     
     denoise_img = AlphaTrimFilter(image, 5, 16)
@@ -174,17 +177,15 @@ def main():
     print("========Parameters of Noise Model==========")
     print(f'mean = {mean:.4f}, variance = {var:.4f}')
 
-    save_img(image, "Original image", 'results/')
-    save_hist(image, 'Original_image', 'results/')
-    save_img(denoise_img, 'Denoise image', 'results/')
-    save_hist(denoise_img, "denoise_image", 'results/')
+    # save_img(image, "Original image", 'results/')
+    # save_hist(image, 'Original_image', 'results/')
+    # save_img(denoise_img, 'Denoise image', 'results/')
+    # save_hist(denoise_img, "denoise_image", 'results/')
    
-    save_img(recover_result, "Deconvolution image", 'results/')
+    save_img(recover_result, "D0=250", 'results/')
     save_hist(recover_result, "Deconvolution result_histogram", 'results/')
 
     save_hist(noise, "Noise", 'results/')
-
-    
 
     plt.show()
 if __name__ == "__main__":
